@@ -106,3 +106,35 @@ train['price'] = [(i[4]/prices[i[3]]) for i in train_raw]
 train['count_day'] = oneHotOfBin([i[5] for i in train_raw], len(train_raw), len(str(bin(2169))[2:]))
 
 
+
+##########################
+
+import pandas as pd
+import numpy as np
+
+items_raw = pd.read_csv('/root/data/sales/items.csv')
+train_raw = pd.read_csv('/root/data/sales/sales_train_v2.csv')
+shops_raw = pd.read_csv('/root/data/sales/shops.csv')
+categories_raw = pd.read_csv('/root/data/sales/item_categories.csv')
+
+train = train_raw.sort_values('date')
+
+train['sorting'] = train['date']
+
+for i in range(2935849):
+	d = train.loc[i, 'date']
+	train.loc[i, 'sorting'] = d[8:10]+d[3:5]+d[0:2]
+### Continue
+
+
+# Somehow get dates sorted consequently: dates = pd.unique(train['date'])
+for item, category in items_raw['item_category_id'].iteritems(): 				# A good idea would be batch it at this step already 
+	item_story = train.where(lambda x: x['item_id']==item).dropna(how='any')
+	item_full_histroy[item] = []
+	item_full_labels[item] = []
+	for date in dates:
+		item_full_histroy[item].append(process_somehow(item_story[date])) # all info on the product with date as sin cos and all categorized
+		if date in item_story[date]:
+			item_full_labels[item].append(get_label(item_story[date]))
+		else:
+			item_full_labels[item].append(empty_label)
