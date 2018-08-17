@@ -1,4 +1,5 @@
 import csv
+import pandas as pd
 import numpy as np
 
 def read_csv_rows(path):
@@ -112,10 +113,14 @@ train['count_day'] = oneHotOfBin([i[5] for i in train_raw], len(train_raw), len(
 import pandas as pd
 import numpy as np
 
-items_raw = pd.read_csv('/root/data/sales/items.csv')
-train_raw = pd.read_csv('/root/data/sales/sales_train_v2.csv')
-shops_raw = pd.read_csv('/root/data/sales/shops.csv')
-categories_raw = pd.read_csv('/root/data/sales/item_categories.csv')
+# items_raw = pd.read_csv('/root/data/sales/items.csv')
+# train_raw = pd.read_csv('/root/data/sales/sales_train_v2.csv')
+# shops_raw = pd.read_csv('/root/data/sales/shops.csv')
+# categories_raw = pd.read_csv('/root/data/sales/item_categories.csv')
+items_raw = pd.read_csv('/root/shared/sales/items.csv')
+train_raw = pd.read_csv('/root/shared/sales/sales_train_v2.csv')
+shops_raw = pd.read_csv('/root/shared/sales/shops.csv')
+categories_raw = pd.read_csv('/root/shared/sales/item_categories.csv')
 
 train = train_raw.sort_values('date')
 
